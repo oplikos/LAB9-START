@@ -67,6 +67,14 @@
         <output></output>
       </fieldset>
     </form>
+    <form>
+      <fieldset>
+        <legend>Input for test</legend>
+        <input name="inputText" id="textInput" />
+        <button id="submitInput">Submit!</button>
+      </fieldset>
+    </form>
+
 
     <section id="error-btns">
       <button>Console Log</button>
@@ -87,7 +95,13 @@
     </section>
   </main>
 
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
   <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "97f662bd750f43069dcc604a5086b175"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
       e.preventDefault();
@@ -140,7 +154,7 @@
     });
     errorBtns[6].addEventListener('click',() => {
       console.log("Console Dir");
-      console.dir(document.location);
+      console.dir([]);
     });
     errorBtns[7].addEventListener('click',() => {
       console.log("Console dirxml");
@@ -161,29 +175,74 @@
     });
     errorBtns[10].addEventListener('click',() => {
       console.log("Console Table");
-      let labPartners = [{1:'name',2:'last name'}, {1:'Sarkis',2:'Bouzkian'}, {1:'Ella',2:'Tung'}];
+      let labPartners = [{Name:'Sarkis',LastName:'Bouzkian'}, {Name:'Ella',LastName:'Tung'}];
       console.table(labPartners);
     });
     errorBtns[11].addEventListener('click',() => {
       console.log("Start Timer");
+      console.time('Start Timer');
     });
     errorBtns[12].addEventListener('click',() => {
       console.log("End Timer");
+      console.timeEnd('End Timer');
     });
     errorBtns[13].addEventListener('click',() => {
       console.log("Console Trace");
+      function first() {
+        function second() {
+          function third() {
+            console.trace();
+          }
+          third();
+        }
+        second();
+      }
+      first();
     });
     errorBtns[14].addEventListener('click',() => {
       console.log("Trigger a Global Error");
+        let x = Math.random() * 10;
+        let mess = " you didnt win";
+        x= Math.floor(x);
+        console.log("the Random number is " + x);
+        try {
+          if(x == 5) {
+            throw "its 5 and its your lucky day today";
+            mess = " you did win";
+          }
+          else if(x < 5 ) {
+            throw "too low you are not that lucky today try again";  
+          }
+          else if(x > 5){ 
+            throw "too high try again";
+          }
+        }
+        catch(err) {
+         console.log("Random number " + x + " is " + err);
+        }
+        finally {
+          console.info('it looks like' + mess);
+        }
     });
-function isValidJSON(text) {
-  try {
-    JSON.parse(text);
-    return true;
-  } catch {
-    return false;
-  }
-}
+    window.onerror = function () { 
+     document.getElementById('submitInput').onclick = function() {
+      var myInput = document.getElementById("textInput");
+      try {
+        console.log("input test");
+        JSON.parse(myInput);
+        console.log("input is a text");
+      } catch {
+        console.error("input not a text");
+      }
+      finally{
+      alert('JavaScript error');
+      console.error("onerror handerl");
+      }
+      
+    }
+    
+  };
+  TrackJS.track('Testing TrackJS!');
   </script>
 </body>
 
