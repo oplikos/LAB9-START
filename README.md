@@ -1,7 +1,11 @@
 # Lab 9 - Starter #
 
- - [ ] Sarkis Bouzikian  
- - [ ] Ella Tung
+ - [x] Sarkis Bouzikian  
+ - [x] Ella Tung
+
+## LINK ##
+
+[Lab9](https://oplikos.github.io/LAB9-START/)
 
 ## IMAGE ##
 
